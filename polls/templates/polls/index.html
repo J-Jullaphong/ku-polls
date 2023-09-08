@@ -19,7 +19,11 @@
                 {% for question in latest_question_list %}
                     <tr>
                         <td>
-                            <a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
+                            {% if question.can_vote %}
+                                <a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
+                            {% else %}
+                                {{ question.question_text }}
+                            {% endif %}
                         </td>
                         <td>
                             <a href="{% url 'polls:results' question.id %}">Results</a>
