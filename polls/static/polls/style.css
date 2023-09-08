@@ -1,8 +1,113 @@
-li a {
-    color: green;
-}
-
 body {
     background: white url("images/background.png") no-repeat;
     background-size: cover;
+}
+
+.banner {
+    width: 100%;
+    padding: 1px 0;
+    background: #B58648;
+    text-align: center;
+    color: #FDDC9F;
+}
+
+.questions {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+table {
+    width: 60%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th {
+    color: #FDDC9F;
+    background-color: #664D2C;
+    padding: 10px;
+    text-align: left;
+}
+
+td {
+    padding: 10px;
+    border: 1px solid #B58648;
+}
+
+td:hover {
+    background-color: #B58648;
+    color: #FDDC9F;
+}
+
+td {
+   color: #664D2C;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+td a {
+    color: #664D2C;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+.poll-form {
+    display: flex;
+    justify-content: center;
+}
+
+.poll-form h1 {
+    color: #664D2C;
+}
+.poll-form label {
+    color: #664D2C;
+    font-size: 20px;
+}
+.poll-form fieldset {
+    border-color: #664D2C;
+    margin-bottom: 20px;
+}
+.poll-form input[type="submit"]{
+    color: #FDDC9F;
+    background-color: #664D2C;
+    font-size: 20px;
+    border-radius: 12px;
+    display: block;
+    margin: 0 auto;
+}
+
+.result-button,
+.back-button {
+    display: flex;
+    justify-content: center;
+}
+
+.result-button a,
+.back-button a {
+    display: inline-block;
+    padding: 3px 6px;
+    background-color: #664D2C;
+    color: #FDDC9F;
+    text-decoration: none;
+    border-radius: 12px;
+    font-size: 20px;
+}
+
+.result-button a:hover,
+.back-button a:hover {
+  background-color: #B58648;
+}
+
+.question-result {
+    text-align: center;
+}
+
+.question-result h1 {
+    color: #664D2C;
+}
+
+.question-result table {
+    margin: 0 auto;
+    margin-bottom: 20px;
 }
