@@ -86,7 +86,7 @@ class QuestionModelTests(TestCase):
 
     def test_can_vote_with_recent_question(self):
         """
-        can_vote() returns True for questions that are recently 
+        can_vote() returns True for questions that are recently
         available for voting.
         """
         question = create_question(question_text='Published question.',

@@ -9,6 +9,9 @@ from .models import Choice, Question
 
 
 class IndexView(generic.ListView):
+    """
+    IndexView displays a list of the 5 latest published questions.
+    """
     template_name = 'polls/index.html'
     context_object_name = 'latest_question_list'
 
@@ -22,6 +25,10 @@ class IndexView(generic.ListView):
 
 
 class DetailView(generic.DetailView):
+    """
+    DetailView displays the details of a poll question,
+    including question text, and its choices.
+    """
     model = Question
     template_name = 'polls/detail.html'
 
@@ -32,6 +39,12 @@ class DetailView(generic.DetailView):
         return Question.objects.filter(pub_date__lte=timezone.now())
 
     def get(self, request, *args, **kwargs):
+        """
+        Handle GET request to display the details of of a poll question.
+        If the question is allowed voting, render the detail page.
+        If the question isn't allowed voting, redirect to the poll index page
+        and display an error message.
+        """
         try:
             question = get_object_or_404(Question, pk=kwargs['pk'])
         except Http404:
@@ -49,10 +62,19 @@ class DetailView(generic.DetailView):
 
 
 class ResultsView(generic.DetailView):
+    """
+    ResultsView displays the results of a poll question.
+    """
     model = Question
     template_name = 'polls/results.html'
 
     def get(self, request, *args, **kwargs):
+        """
+        Handle GET request to display the results of a poll question.
+        If the results are available, display the results.
+        If the results are not available, redirect to the poll index page
+        and display an error message.
+        """
         try:
             question = get_object_or_404(Question, pk=kwargs['pk'])
         except Http404:
@@ -70,6 +92,9 @@ class ResultsView(generic.DetailView):
 
 
 def vote(request, question_id):
+    """
+    vote() is responsible for handling user votes on a poll question.
+    """
     question = get_object_or_404(Question, pk=question_id)
 
     try:
