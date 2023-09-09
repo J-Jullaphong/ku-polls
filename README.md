@@ -1,5 +1,7 @@
 ## KU Polls: Online Survey Questions Web Application
 
+[![Django CI](https://github.com/J-Jullaphong/ku-polls/actions/workflows/django.yml/badge.svg)](https://github.com/J-Jullaphong/ku-polls/actions/workflows/django.yml)
+
 The web application for online survey questions, wrote with Python and [Django](https://www.djangoproject.com/) web framework.
 It is based on [Django Tutorial project][django-tutorial] with additional features.
 
