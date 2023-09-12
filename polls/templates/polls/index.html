@@ -3,7 +3,12 @@
 <link rel="stylesheet" href="{% static 'polls/style.css' %}">
 
 <div class="banner">
-    <h1>Welcome to KU Polls</h1>
+    <h1>KU Polls</h1>
+    {% if user.is_authenticated %}
+        <h2>Welcome back, {{user.username.title}}</h2>
+    {% else %}
+        <h2>Please <a href="{% url 'login' %}">Login</a> to vote</h2>
+    {% endif %}
 </div>
 
 {% if messages %}
