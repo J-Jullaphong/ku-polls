@@ -53,8 +53,16 @@ class DetailView(generic.DetailView):
             return redirect('polls:index')
         else:
             if question.can_vote():
+
+                requested_user = request.user
+                try:
+                    previous_vote = Vote.objects.get(user=requested_user,
+                                                     choice__question=question).choice.id
+                except (Vote.DoesNotExist, TypeError):
+                    previous_vote = 0
                 return render(request, self.template_name,
-                              {'question': question})
+                              {'question': question,
+                               'previous_vote': previous_vote})
             else:
                 messages.error(request,
                                message=f"Poll {kwargs['pk']} is not available "
