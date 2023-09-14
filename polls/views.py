@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 
-from .models import Choice, Question
+from .models import Choice, Question, Vote
 
 
 class IndexView(generic.ListView):
@@ -41,7 +41,7 @@ class DetailView(generic.DetailView):
 
     def get(self, request, *args, **kwargs):
         """
-        Handle GET request to display the details of of a poll question.
+        Handle GET request to display the details of a poll question.
         If the question is allowed voting, render the detail page.
         If the question isn't allowed voting, redirect to the poll index page
         and display an error message.
@@ -100,7 +100,7 @@ def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
 
     if not question.can_vote():
-        messages.error(request, message=f"Poll {question.id} is not available "
+        messages.error(request, message=f"Poll {question_id} is not available "
                                         f"for voting.")
         return redirect('polls:index')
 
@@ -111,8 +111,18 @@ def vote(request, question_id):
             'question': question,
             'error_message': "You didn't select a choice.",
         })
-    else:
-        selected_choice.votes += 1
-        selected_choice.save()
-        return HttpResponseRedirect(reverse('polls:results', args=(question.id,
-                                                                   )))
+
+    requested_user = request.user
+
+    try:
+        # Find a vote for this user and this question
+        vote = Vote.objects.get(user=requested_user, choice__question=question)
+        # Update his vote
+        vote.choice = selected_choice
+    except Vote.DoesNotExist:
+        # No matching vote - Create a new Vote
+        vote = Vote(user=requested_user, choice=selected_choice)
+    vote.save()
+    messages.info(request, message=f"You voted for \"{selected_choice}\".")
+    return HttpResponseRedirect(reverse('polls:results', args=(question.id,
+                                                               )))

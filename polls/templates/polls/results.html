@@ -6,6 +6,14 @@
     <h1>Welcome to KU Polls</h1>
 </div>
 
+{% if messages %}
+    {% for message in messages %}
+        <div class="confirmation">
+            <h2>{{ message }}</h2>
+        </div>
+    {% endfor %}
+{% endif %}
+
 <div class="question-result">
     <h1>{{ question.question_text }}</h1>
 
