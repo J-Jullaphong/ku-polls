@@ -2,13 +2,24 @@
 
 <link rel="stylesheet" href="{% static 'polls/style.css' %}">
 
-<div class="banner">
-    <h1>KU Polls</h1>
-    {% if user.is_authenticated %}
-        <h2>Welcome back, {{user.username.title}}</h2>
-    {% else %}
-        <h2>Please <a href="{% url 'login' %}">Login</a> to vote</h2>
-    {% endif %}
+<div class="navbar">
+    <ul>
+        <li>
+            <a href="{% url 'polls:index' %}">KU Polls</a>
+        </li>
+        {% if user.is_authenticated %}
+            <li style="float:right">
+                <a href="{% url 'logout' %}">Log out</a>
+            </li>
+            <li style="float:right;" class="name">
+                <a>{{user.username.title}}</a>
+            </li>
+        {% else %}
+            <li style="float:right">
+                <a href="{% url 'login' %}">Login</a>
+            </li>
+        {% endif %}
+    </ul>
 </div>
 
 {% if messages %}

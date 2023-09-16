@@ -3,12 +3,34 @@ body {
     background-size: cover;
 }
 
-.banner {
-    width: 100%;
-    padding: 1px 0;
-    background: #B58648;
-    text-align: center;
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #B58648;
+}
+
+.navbar li {
+    float: left;
+}
+
+.navbar li a {
+    display: block;
     color: #FDDC9F;
+    text-align: center;
+    padding: 10px 16px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.navbar li.name a {
+    color: #664D2C;
+}
+
+.navbar li:not(.name) a:hover {
+    background-color: #664D2C;
 }
 
 .alert {
