@@ -5,8 +5,8 @@ from django.views import generic
 from django.contrib import messages
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-
 from .models import Choice, Question, Vote
+from logging import getLogger
 
 
 class IndexView(generic.ListView):
@@ -57,7 +57,8 @@ class DetailView(generic.DetailView):
                 requested_user = request.user
                 try:
                     previous_vote = Vote.objects.get(user=requested_user,
-                                                     choice__question=question).choice.id
+                                                     choice__question=question
+                                                     ).choice.id
                 except (Vote.DoesNotExist, TypeError):
                     previous_vote = 0
                 return render(request, self.template_name,
@@ -100,12 +101,26 @@ class ResultsView(generic.DetailView):
                 return redirect('polls:index')
 
 
+def get_client_ip(request):
+    """Get the visitor’s IP address using request headers."""
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
+
+
 @login_required
 def vote(request, question_id):
     """
     vote() is responsible for handling user votes on a poll question.
     """
     question = get_object_or_404(Question, pk=question_id)
+    requested_user = request.user
+    ip_address = get_client_ip(request)
+    logger = getLogger('polls')
+    logger.info(f'{requested_user} logged in from {ip_address}')
 
     if not question.can_vote():
         messages.error(request, message=f"Poll {question_id} is not available "
@@ -115,12 +130,12 @@ def vote(request, question_id):
     try:
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist):
+        logger.warning(f'{requested_user} failed to vote for {selected_choice}'
+                       f'in {question} from {ip_address}')
         return render(request, 'polls/detail.html', {
             'question': question,
             'error_message': "You didn't select a choice.",
         })
-
-    requested_user = request.user
 
     try:
         # Find a vote for this user and this question
@@ -131,6 +146,8 @@ def vote(request, question_id):
         # No matching vote - Create a new Vote
         vote = Vote(user=requested_user, choice=selected_choice)
     vote.save()
+    logger.info(f'{requested_user} voted for {selected_choice} '
+                f'in {question} from {ip_address}')
     messages.info(request, message=f"You voted for \"{selected_choice}\".")
     return HttpResponseRedirect(reverse('polls:results', args=(question.id,
                                                                )))
