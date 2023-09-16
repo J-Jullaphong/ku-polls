@@ -29,10 +29,13 @@ body {
     color: #664D2C;
 }
 
+.navbar li a.login {
+    background-color: #EA3333;
+}
+
 .navbar li:not(.name) a:hover {
     background-color: #664D2C;
 }
-
 .alert {
     text-align: center;
     width: 50%;
