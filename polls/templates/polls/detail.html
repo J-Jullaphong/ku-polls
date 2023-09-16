@@ -15,9 +15,14 @@
                 <a>{{user.username.title}}</a>
             </li>
         {% else %}
-            <li style="float:right">
-                <a href="{% url 'login' %}" class="login">Please Login Here</a>
-            </li>
+            <div class="auth">
+                <li style="float:right">
+                    <a href="{% url 'signup' %}">Sign up</a>
+                </li>
+                <li style="float:right">
+                    <a href="{% url 'login' %}">Login</a>
+                </li>
+            </div>
         {% endif %}
     </ul>
 </div>

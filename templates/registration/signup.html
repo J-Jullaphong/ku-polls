@@ -1,17 +1,29 @@
-<h2>Register</h2>
-{% if messages %}
-    {% for message in messages %}
-        <h2 style="color: #EA3333">{{ message }}</h2>
-    {% endfor %}
-{% endif %}
-<form method="POST">
-    {% csrf_token %}
-    <table style="padding: 2ex;">
-    {{ form.as_table }}
-    <tr>
-    <td colspan="2">
-    <button type="submit">Register</button>
-    </td>
-    </tr>
-    </table>
-</form>
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'polls/style.css' %}">
+
+<div class="navbar">
+    <ul>
+        <li>
+            <a href="{% url 'polls:index' %}">KU Polls</a>
+        </li>
+    </ul>
+</div>
+
+<div class="authentication-page">
+    <h2>Register</h2>
+    {% if messages %}
+        {% for message in messages %}
+            <h2 style="color: #EA3333">{{ message }}</h2>
+        {% endfor %}
+    {% endif %}
+    <form method="POST">
+        {% csrf_token %}
+        <table style="padding: 2ex;">
+        {{ form.as_table }}
+        </table>
+        <p>
+        <button type="submit">Register</button>
+        </p>
+    </form>
+</div>
