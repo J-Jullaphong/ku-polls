@@ -63,3 +63,18 @@ class AuthenticationTest(TestCase):
         self.assertEqual(response.status_code, 302)
         login_next_url = f"{reverse('login')}?next={vote_url}"
         self.assertRedirects(response, login_next_url)
+
+    def test_signup_page(self):
+        """
+        Signup page testing for both GET and POST methods.
+        GET request should return a 200 OK response.
+        POST request should return a 302 redirect to the polls index page.
+        """
+        signup_url = reverse("signup")
+        response = self.client.get(signup_url)
+        self.assertEqual(200, response.status_code)
+        form_data = {'username': 'new_tester', 'password1': self.password,
+                     'password2': self.password}
+        response = self.client.post(signup_url, form_data)
+        self.assertEqual(302, response.status_code)
+        self.assertRedirects(response, reverse('polls:index'))
