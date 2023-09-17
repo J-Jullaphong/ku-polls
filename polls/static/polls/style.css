@@ -45,6 +45,15 @@ body {
     padding: 6px;
 }
 
+.greeting {
+    padding-left: 1vw;
+}
+
+.greeting h2 {
+    color: #664D2C;
+    font-size: 1.8em;
+}
+
 .questions {
     display: flex;
     justify-content: center;
