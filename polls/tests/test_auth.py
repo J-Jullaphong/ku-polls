@@ -102,7 +102,7 @@ class AuthenticationTest(TestCase):
         and not redirect to other page.
         """
         login_url = reverse("login")
-        form_data = {'username': 'new_user', 'password': self.password}
+        form_data = {'username': self.username, 'password': 'wrongpassword123'}
         response = self.client.post(login_url, form_data)
         self.assertEqual(200, response.status_code)
         self.assertContains(response,
