@@ -51,24 +51,21 @@ class DetailView(generic.DetailView):
         except Http404:
             messages.error(request, message=f"Poll {kwargs['pk']} not found.")
             return redirect('polls:index')
-        else:
-            if question.can_vote():
-
-                requested_user = request.user
-                try:
-                    previous_vote = Vote.objects.get(user=requested_user,
-                                                     choice__question=question
-                                                     ).choice.id
-                except (Vote.DoesNotExist, TypeError):
-                    previous_vote = 0
-                return render(request, self.template_name,
-                              {'question': question,
-                               'previous_vote': previous_vote})
-            else:
-                messages.error(request,
-                               message=f"Poll {kwargs['pk']} is not available "
-                                       f"for voting.")
-                return redirect('polls:index')
+        if question.can_vote():
+            requested_user = request.user
+            try:
+                previous_vote = Vote.objects.get(user=requested_user,
+                                                 choice__question=question
+                                                 ).choice.id
+            except (Vote.DoesNotExist, TypeError):
+                previous_vote = 0
+            return render(request, self.template_name,
+                          {'question': question,
+                           'previous_vote': previous_vote})
+        messages.error(request,
+                       message=f"Poll {kwargs['pk']} is not available "
+                               f"for voting.")
+        return redirect('polls:index')
 
 
 class ResultsView(generic.DetailView):
@@ -90,15 +87,13 @@ class ResultsView(generic.DetailView):
         except Http404:
             messages.error(request, message=f"Poll {kwargs['pk']} not found.")
             return redirect('polls:index')
-        else:
-            if question.is_published():
-                return render(request, self.template_name,
-                              {'question': question})
-            else:
-                messages.error(request,
-                               message=f"Poll {kwargs['pk']}'s result is not "
-                                       f"available.")
-                return redirect('polls:index')
+        if question.is_published():
+            return render(request, self.template_name,
+                          {'question': question})
+        messages.error(request,
+                       message=f"Poll {kwargs['pk']}'s result is not "
+                               f"available.")
+        return redirect('polls:index')
 
 
 def get_client_ip(request):
@@ -126,7 +121,6 @@ def vote(request, question_id):
         messages.error(request, message=f"Poll {question_id} is not available "
                                         f"for voting.")
         return redirect('polls:index')
-
     try:
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist):
@@ -136,16 +130,16 @@ def vote(request, question_id):
             'question': question,
             'error_message': "You didn't select a choice.",
         })
-
     try:
         # Find a vote for this user and this question
-        vote = Vote.objects.get(user=requested_user, choice__question=question)
+        selected_vote = Vote.objects.get(user=requested_user,
+                                         choice__question=question)
         # Update his vote
-        vote.choice = selected_choice
+        selected_vote.choice = selected_choice
     except Vote.DoesNotExist:
         # No matching vote - Create a new Vote
-        vote = Vote(user=requested_user, choice=selected_choice)
-    vote.save()
+        selected_vote = Vote(user=requested_user, choice=selected_choice)
+    selected_vote.save()
     logger.info(f'{requested_user} voted for {selected_choice} '
                 f'in {question} from {ip_address}')
     messages.info(request, message=f"You voted for \"{selected_choice}\".")
