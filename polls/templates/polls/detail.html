@@ -2,8 +2,29 @@
 
 <link rel="stylesheet" href="{% static 'polls/style.css' %}">
 
-<div class="banner">
-    <h1>Welcome to KU Polls</h1>
+<div class="navbar">
+    <ul>
+        <li>
+            <a href="{% url 'polls:index' %}">KU Polls</a>
+        </li>
+        {% if user.is_authenticated %}
+            <li style="float:right">
+                <a href="{% url 'logout' %}">Log out</a>
+            </li>
+            <li style="float:right;" class="name">
+                <a>{{user.username.title}}</a>
+            </li>
+        {% else %}
+            <div class="auth">
+                <li style="float:right">
+                    <a href="{% url 'signup' %}">Sign up</a>
+                </li>
+                <li style="float:right">
+                    <a href="{% url 'login' %}">Login</a>
+                </li>
+            </div>
+        {% endif %}
+    </ul>
 </div>
 
 <div class="poll-form">
@@ -13,8 +34,13 @@
         <legend><h1>{{ question.question_text }}</h1></legend>
         {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
         {% for choice in question.choice_set.all %}
-            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
-            <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+            {% if previous_vote == choice.id %}
+                <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" checked>
+                <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+            {% else %}
+                <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+                <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+            {% endif %}
         {% endfor %}
     </fieldset>
     <input type="submit" value="Vote">

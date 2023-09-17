@@ -3,22 +3,55 @@ body {
     background-size: cover;
 }
 
-.banner {
-    width: 100%;
-    padding: 1px 0;
-    background: #B58648;
-    text-align: center;
-    color: #FDDC9F;
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #B58648;
 }
 
+.navbar li {
+    float: left;
+}
+
+.navbar li a {
+    display: block;
+    color: #FDDC9F;
+    text-align: center;
+    padding: 10px 16px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.navbar li.name a {
+    color: #664D2C;
+}
+
+.auth li a {
+    background-color: #EA3333;
+}
+
+.navbar li:not(.name) a:hover {
+    background-color: #664D2C;
+}
 .alert {
     text-align: center;
     width: 50%;
     background-color: #EA3333;
     border-radius: 8px;
-    margin: 0 auto;
-    margin-top: 20px;
+    margin: 20px auto 0;
     padding: 6px;
+}
+
+.greeting {
+    padding-left: 1vw;
+}
+
+.greeting h2 {
+    color: #664D2C;
+    font-size: 1.8em;
 }
 
 .questions {
@@ -78,6 +111,7 @@ td a {
     border-color: #664D2C;
     margin-bottom: 20px;
 }
+
 .poll-form input[type="submit"]{
     color: #FDDC9F;
     background-color: #664D2C;
@@ -118,6 +152,51 @@ td a {
 }
 
 .question-result table {
+    margin: 0 auto 20px;
+}
+
+.confirmation {
+    text-align: center;
+    width: 50%;
+    background-color: #92C755;
+    border-radius: 8px;
+    margin: 20px auto 0;
+    padding: 6px;
+}
+
+.authentication-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.authentication-page h2 {
+    color: #664D2C;
+    font-weight: bold;
+    font-size: 2em;
+}
+
+.authentication-page button[type="submit"] {
+    color: #FDDC9F;
+    background-color: #664D2C;
+    font-size: 20px;
+    border-radius: 12px;
+    display: block;
     margin: 0 auto;
-    margin-bottom: 20px;
+}
+
+.authentication-page .signup-link {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #664D2C;
+}
+
+.authentication-page table {
+    margin: 0 auto;
+}
+
+.authentication-page td {
+    background-color: #B58648;
+    color: #FDDC9F;
 }

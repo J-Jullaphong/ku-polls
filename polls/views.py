@@ -4,8 +4,9 @@ from django.urls import reverse
 from django.views import generic
 from django.contrib import messages
 from django.utils import timezone
-
-from .models import Choice, Question
+from django.contrib.auth.decorators import login_required
+from .models import Choice, Question, Vote
+from logging import getLogger
 
 
 class IndexView(generic.ListView):
@@ -40,7 +41,7 @@ class DetailView(generic.DetailView):
 
     def get(self, request, *args, **kwargs):
         """
-        Handle GET request to display the details of of a poll question.
+        Handle GET request to display the details of a poll question.
         If the question is allowed voting, render the detail page.
         If the question isn't allowed voting, redirect to the poll index page
         and display an error message.
@@ -52,8 +53,17 @@ class DetailView(generic.DetailView):
             return redirect('polls:index')
         else:
             if question.can_vote():
+
+                requested_user = request.user
+                try:
+                    previous_vote = Vote.objects.get(user=requested_user,
+                                                     choice__question=question
+                                                     ).choice.id
+                except (Vote.DoesNotExist, TypeError):
+                    previous_vote = 0
                 return render(request, self.template_name,
-                              {'question': question})
+                              {'question': question,
+                               'previous_vote': previous_vote})
             else:
                 messages.error(request,
                                message=f"Poll {kwargs['pk']} is not available "
@@ -91,21 +101,53 @@ class ResultsView(generic.DetailView):
                 return redirect('polls:index')
 
 
+def get_client_ip(request):
+    """Get the visitor’s IP address using request headers."""
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
+
+
+@login_required
 def vote(request, question_id):
     """
     vote() is responsible for handling user votes on a poll question.
     """
     question = get_object_or_404(Question, pk=question_id)
+    requested_user = request.user
+    ip_address = get_client_ip(request)
+    logger = getLogger('polls')
+    logger.info(f'{requested_user} logged in from {ip_address}')
+
+    if not question.can_vote():
+        messages.error(request, message=f"Poll {question_id} is not available "
+                                        f"for voting.")
+        return redirect('polls:index')
 
     try:
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist):
+        logger.warning(f'{requested_user} failed to vote for {selected_choice}'
+                       f'in {question} from {ip_address}')
         return render(request, 'polls/detail.html', {
             'question': question,
             'error_message': "You didn't select a choice.",
         })
-    else:
-        selected_choice.votes += 1
-        selected_choice.save()
-        return HttpResponseRedirect(reverse('polls:results', args=(question.id,
-                                                                   )))
+
+    try:
+        # Find a vote for this user and this question
+        vote = Vote.objects.get(user=requested_user, choice__question=question)
+        # Update his vote
+        vote.choice = selected_choice
+    except Vote.DoesNotExist:
+        # No matching vote - Create a new Vote
+        vote = Vote(user=requested_user, choice=selected_choice)
+    vote.save()
+    logger.info(f'{requested_user} voted for {selected_choice} '
+                f'in {question} from {ip_address}')
+    messages.info(request, message=f"You voted for \"{selected_choice}\".")
+    return HttpResponseRedirect(reverse('polls:results', args=(question.id,
+                                                               )))

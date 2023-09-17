@@ -12,6 +12,15 @@ https://cpske.github.io/ISP) course at Kasetsart University.
 
 to be added.
 
+## Demo Users
+
+Use these demo accounts to log in for testing.
+
+|    Username     |     Password     |
+|:---------------:|:----------------:|
+| **demo_user_1** | @demo_password_1 |
+| **demo_user_2** | @demo_password_2 |
+
 ## Project Documents
 
 All project documents are in the [Project Wiki](../../wiki/Home).
@@ -21,6 +30,7 @@ All project documents are in the [Project Wiki](../../wiki/Home).
 - [Development Plan](../../wiki/Development%20Plan)
 - [Iteration 1 Plan](../../wiki/Iteration%201%20Plan)
 - [Iteration 2 Plan](../../wiki/Iteration%202%20Plan)
+- [Iteration 3 Plan](../../wiki/Iteration%203%20Plan)
 - [Task Board](https://github.com/users/J-Jullaphong/projects/2)
 
 [django-tutorial]: https://docs.djangoproject.com/en/4.1/intro/tutorial01/

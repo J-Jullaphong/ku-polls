@@ -2,9 +2,38 @@
 
 <link rel="stylesheet" href="{% static 'polls/style.css' %}">
 
-<div class="banner">
-    <h1>Welcome to KU Polls</h1>
+<div class="navbar">
+    <ul>
+        <li>
+            <a href="{% url 'polls:index' %}">KU Polls</a>
+        </li>
+        {% if user.is_authenticated %}
+            <li style="float:right">
+                <a href="{% url 'logout' %}">Log out</a>
+            </li>
+            <li style="float:right;" class="name">
+                <a>{{user.username.title}}</a>
+            </li>
+        {% else %}
+            <div class="auth">
+                <li style="float:right">
+                    <a href="{% url 'signup' %}">Sign up</a>
+                </li>
+                <li style="float:right">
+                    <a href="{% url 'login' %}">Login</a>
+                </li>
+            </div>
+        {% endif %}
+    </ul>
 </div>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="confirmation">
+            <h2>{{ message }}</h2>
+        </div>
+    {% endfor %}
+{% endif %}
 
 <div class="question-result">
     <h1>{{ question.question_text }}</h1>
