@@ -11,6 +11,7 @@ class AuthenticationTest(TestCase):
         Set up essential components to be used in authentication tests.
         Create a test user, a test question, and choices.
         """
+        super().setUp()
         self.username = 'tester'
         self.password = 'testpassword123'
         self.user = User.objects.create_user(username=self.username,
@@ -60,7 +61,7 @@ class AuthenticationTest(TestCase):
         choice = self.question.choice_set.first()
         form_data = {'choice': f'{choice.id}'}
         response = self.client.post(vote_url, form_data)
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(302, response.status_code)
         login_next_url = f"{reverse('login')}?next={vote_url}"
         self.assertRedirects(response, login_next_url)
 
@@ -78,3 +79,31 @@ class AuthenticationTest(TestCase):
         response = self.client.post(signup_url, form_data)
         self.assertEqual(302, response.status_code)
         self.assertRedirects(response, reverse('polls:index'))
+
+    def test_login_with_unsigned_up_user(self):
+        """
+        An unsigned up user cannot log in.
+        The login page should show the message
+        "Please enter a correct username and password."
+        and not redirect to other page.
+        """
+        login_url = reverse("login")
+        form_data = {'username': 'new_user', 'password': self.password}
+        response = self.client.post(login_url, form_data)
+        self.assertEqual(200, response.status_code)
+        self.assertContains(response,
+                            'Please enter a correct username and password.')
+
+    def test_login_with_incorrect_password(self):
+        """
+        When a user try to log in with an incorrect password, the login page
+        should show the message
+        "Please enter a correct username and password."
+        and not redirect to other page.
+        """
+        login_url = reverse("login")
+        form_data = {'username': 'new_user', 'password': self.password}
+        response = self.client.post(login_url, form_data)
+        self.assertEqual(200, response.status_code)
+        self.assertContains(response,
+                            'Please enter a correct username and password.')
