@@ -130,7 +130,8 @@ def vote(request, question_id):
     try:
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist):
-        logger.warning(f'{requested_user} failed to vote {question} from {ip_address}')
+        logger.warning(f'{requested_user} failed to vote {question} from '
+                       f'{ip_address}')
         return render(request, 'polls/detail.html', {
             'question': question,
             'error_message': "You didn't select a choice.",
