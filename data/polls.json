@@ -45,6 +45,15 @@
   }
 },
 {
+  "model": "polls.question",
+  "pk": 7,
+  "fields": {
+    "question_text": "What type of accommodation do you prefer when visiting Thailand?",
+    "pub_date": "2023-09-21T10:13:58Z",
+    "end_date": null
+  }
+},
+{
   "model": "polls.choice",
   "pk": 4,
   "fields": {
@@ -221,59 +230,91 @@
   }
 },
 {
-  "model": "polls.vote",
-  "pk": 1,
+  "model": "polls.choice",
+  "pk": 26,
   "fields": {
-    "choice": 15,
-    "user": 2
+    "question": 7,
+    "choice_text": "Luxury Resorts and Hotels"
   }
 },
 {
-  "model": "polls.vote",
-  "pk": 2,
+  "model": "polls.choice",
+  "pk": 27,
   "fields": {
-    "choice": 19,
-    "user": 2
+    "question": 7,
+    "choice_text": "Boutique Guesthouses"
   }
 },
 {
-  "model": "polls.vote",
-  "pk": 3,
+  "model": "polls.choice",
+  "pk": 28,
   "fields": {
-    "choice": 23,
-    "user": 2
+    "question": 7,
+    "choice_text": "Budget-Friendly Hostels"
   }
 },
 {
-  "model": "polls.vote",
-  "pk": 4,
+  "model": "polls.choice",
+  "pk": 29,
   "fields": {
-    "choice": 17,
-    "user": 3
+    "question": 7,
+    "choice_text": "Vacation Rentals"
   }
 },
 {
-  "model": "polls.vote",
-  "pk": 5,
+  "model": "polls.choice",
+  "pk": 30,
   "fields": {
-    "choice": 19,
-    "user": 3
+    "question": 7,
+    "choice_text": "Eco-Friendly or Sustainable Lodges"
   }
 },
 {
-  "model": "polls.vote",
-  "pk": 6,
+  "model": "polls.choice",
+  "pk": 31,
   "fields": {
-    "choice": 22,
-    "user": 3
+    "question": 7,
+    "choice_text": "Homestays with Locals"
   }
 },
 {
-  "model": "polls.vote",
-  "pk": 7,
+  "model": "polls.choice",
+  "pk": 32,
   "fields": {
-    "choice": 15,
-    "user": 4
+    "question": 7,
+    "choice_text": "Camping"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 33,
+  "fields": {
+    "question": 7,
+    "choice_text": "Other"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 34,
+  "fields": {
+    "question": 2,
+    "choice_text": "Other"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 35,
+  "fields": {
+    "question": 3,
+    "choice_text": "Other"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 36,
+  "fields": {
+    "question": 4,
+    "choice_text": "Other"
   }
 }
 ]
