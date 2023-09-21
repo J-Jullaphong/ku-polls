@@ -124,9 +124,11 @@ def vote(request, question_id):
     try:
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist):
-        logger.warning(f'{requested_user} failed to vote {question} from '
-                       f'{ip_address}')
-        messages.error(request, message="You didn't select a choice.")
+        previous_url = request.META.get('HTTP_REFERER')
+        if 'login' not in str(previous_url):
+            logger.warning(f'{requested_user} failed to vote {question} from '
+                           f'{ip_address}')
+            messages.error(request, message="You didn't select a choice.")
         return HttpResponseRedirect(reverse('polls:detail', args=(question.id,
                                                                   )))
 
