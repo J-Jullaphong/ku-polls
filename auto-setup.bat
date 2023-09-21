@@ -21,4 +21,4 @@ python manage.py test
 REM Install data from the data fixtures
 python manage.py loaddata data/users.json data/polls.json
 
-echo "\nPlease continue with How to Run instructions in README.md"
+echo Please continue with How to Run instructions in README.md
