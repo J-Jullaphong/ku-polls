@@ -11,18 +11,18 @@ from logging import getLogger
 
 class IndexView(generic.ListView):
     """
-    IndexView displays a list of the 5 latest published questions.
+    IndexView displays a list of all published questions.
     """
     template_name = 'polls/index.html'
     context_object_name = 'latest_question_list'
 
     def get_queryset(self):
         """
-        Return the last five published questions (not including those set to be
+        Return all published questions (not including those set to be
         published in the future).
         """
         return Question.objects.filter(pub_date__lte=timezone.now()
-                                       ).order_by('-pub_date')[:5]
+                                       ).order_by('-pub_date')
 
 
 class DetailView(generic.DetailView):
@@ -126,10 +126,10 @@ def vote(request, question_id):
     except (KeyError, Choice.DoesNotExist):
         logger.warning(f'{requested_user} failed to vote {question} from '
                        f'{ip_address}')
-        return render(request, 'polls/detail.html', {
-            'question': question,
-            'error_message': "You didn't select a choice.",
-        })
+        messages.error(request, message="You didn't select a choice.")
+        return HttpResponseRedirect(reverse('polls:detail', args=(question.id,
+                                                                  )))
+
     try:
         # Find a vote for this user and this question
         selected_vote = Vote.objects.get(user=requested_user,

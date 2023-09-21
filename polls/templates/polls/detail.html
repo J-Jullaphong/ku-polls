@@ -27,12 +27,19 @@
     </ul>
 </div>
 
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert">
+            <h2>{{ message }}</h2>
+        </div>
+    {% endfor %}
+{% endif %}
+
 <div class="poll-form">
     <form action="{% url 'polls:vote' question.id %}" method="post">
     {% csrf_token %}
     <fieldset>
         <legend><h1>{{ question.question_text }}</h1></legend>
-        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
         {% for choice in question.choice_set.all %}
             {% if previous_vote == choice.id %}
                 <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" checked>
