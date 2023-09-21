@@ -8,9 +8,28 @@ It is based on [Django Tutorial project][django-tutorial] with additional featur
 This app was created as part of the [Individual Software Process](
 https://cpske.github.io/ISP) course at Kasetsart University.
 
-## Install and Run
+## Installation Instructions
 
-to be added.
+Please read and follow the instructions in [Installation Instructions](Installation.md).
+
+## How to Run Instructions
+
+Before running the server, please make sure that the installation is completed.
+
+1. Start the server.
+    ```
+    python manage.py runserver
+    ```
+   
+2. To use this application, go to this link in your browser.
+    ```
+    http://localhost:8000
+    ```
+   
+3. After finish using the application, deactivate the virtual environment.
+    ```
+    deactivate
+    ```
 
 ## Demo Users
 
