@@ -36,7 +36,7 @@ Before running the server, please make sure that the installation is completed.
    http://localhost:8000
    ```
 
-4. To close the running server, press `Ctrl+C` on your terminal/cmd. 
+4. To close the running server, press `Ctrl+C` in your terminal or command prompt. 
 
 5. After finish using the application, deactivate the virtual environment.
    ```
@@ -49,6 +49,7 @@ Use these demo accounts to log in for testing.
 
 |    Username     |     Password     |
 |:---------------:|:----------------:|
+| **demo_admin**  |  @demo_password  |
 | **demo_user_1** | @demo_password_1 |
 | **demo_user_2** | @demo_password_2 |
 
