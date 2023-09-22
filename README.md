@@ -8,9 +8,40 @@ It is based on [Django Tutorial project][django-tutorial] with additional featur
 This app was created as part of the [Individual Software Process](
 https://cpske.github.io/ISP) course at Kasetsart University.
 
-## Install and Run
+## Installation Instructions
 
-to be added.
+Please read and follow the instructions in [Installation Instructions](Installation.md).
+
+## How to Run Instructions
+
+Before running the server, please make sure that the installation is completed.
+
+1. Activate the virtual environment before using the application.
+   - Linux and macOS
+   ``` 
+   source venv/bin/activate 
+   ```
+   - Windows
+   ```  
+   call venv\Scripts\activate
+   ```
+
+2. Start the server.
+   ```
+   python manage.py runserver
+   ```
+   
+3. To use this application, go to this link in your browser.
+   ```
+   http://localhost:8000
+   ```
+
+4. To close the running server, press `Ctrl+C` in your terminal or command prompt. 
+
+5. After finish using the application, deactivate the virtual environment.
+   ```
+   deactivate
+   ```
 
 ## Demo Users
 
@@ -18,6 +49,7 @@ Use these demo accounts to log in for testing.
 
 |    Username     |     Password     |
 |:---------------:|:----------------:|
+| **demo_admin**  |  @demo_password  |
 | **demo_user_1** | @demo_password_1 |
 | **demo_user_2** | @demo_password_2 |
 
@@ -31,6 +63,7 @@ All project documents are in the [Project Wiki](../../wiki/Home).
 - [Iteration 1 Plan](../../wiki/Iteration%201%20Plan)
 - [Iteration 2 Plan](../../wiki/Iteration%202%20Plan)
 - [Iteration 3 Plan](../../wiki/Iteration%203%20Plan)
+- [Iteration 4 Plan](../../wiki/Iteration%204%20Plan)
 - [Domain Model](../../wiki/Domain-Model)
 - [Task Board](https://github.com/users/J-Jullaphong/projects/2)
 
