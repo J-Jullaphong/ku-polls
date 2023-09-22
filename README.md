@@ -16,20 +16,32 @@ Please read and follow the instructions in [Installation Instructions](Installat
 
 Before running the server, please make sure that the installation is completed.
 
-1. Start the server.
-    ```
-    python manage.py runserver
-    ```
+1. Activate the virtual environment before using the application.
+   - Linux and macOS
+   ``` 
+   source venv/bin/activate 
+   ```
+   - Windows
+   ```  
+   call venv\Scripts\activate
+   ```
+
+2. Start the server.
+   ```
+   python manage.py runserver
+   ```
    
-2. To use this application, go to this link in your browser.
-    ```
-    http://localhost:8000
-    ```
-   
-3. After finish using the application, deactivate the virtual environment.
-    ```
-    deactivate
-    ```
+3. To use this application, go to this link in your browser.
+   ```
+   http://localhost:8000
+   ```
+
+4. To close the running server, press `Ctrl+C` on your terminal/cmd. 
+
+5. After finish using the application, deactivate the virtual environment.
+   ```
+   deactivate
+   ```
 
 ## Demo Users
 
