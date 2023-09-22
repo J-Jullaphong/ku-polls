@@ -59,7 +59,7 @@
    call venv\Scripts\activate
    ```
 
-5. Install Dependencies.
+5. Install Dependencies for required python modules.
    ```
    pip install -r requirements.txt
    ```
@@ -76,12 +76,12 @@
    
 7. Use a text editor to edit the .env file according to your needs.
 
-8. Run migrations.
+8. Run migrations to apply database migrations.
    ```
    python manage.py migrate
    ```
    
-9. Run tests.
+9. Run tests to verify the correctness of the above installations.
    ```
    python manage.py test
    ```
@@ -95,3 +95,5 @@
    ```
    python manage.py loaddata data/votes.json
    ```
+
+> **NOTE:** Once the script is completed, please follow how to run instruction in [README](README.md).
