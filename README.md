@@ -26,7 +26,7 @@ Before running the server, please make sure that the installation is completed.
    call venv\Scripts\activate
    ```
 
-2. Start the server.
+2. Start the server. (If it doesn't work, please use `python3` instead of `python`)
    ```
    python manage.py runserver
    ```

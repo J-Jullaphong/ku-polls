@@ -96,4 +96,4 @@
    python manage.py loaddata data/votes.json
    ```
 
-> **NOTE:** Once the script is completed, please follow how to run instruction in [README](README.md).
+> **NOTE:** Once the steps are completed, please follow how to run instruction in [README](README.md).
