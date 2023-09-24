@@ -47,6 +47,7 @@
             <thead>
                 <tr>
                     <th>Poll Questions</th>
+                    <th>Poll Status</th>
                     <th>Vote Results</th>
                 </tr>
             </thead>
@@ -58,6 +59,13 @@
                                 <a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
                             {% else %}
                                 {{ question.question_text }}
+                            {% endif %}
+                        </td>
+                        <td style="text-align: center">
+                            {% if question.can_vote %}
+                                Opening
+                            {% else %}
+                                Ended
                             {% endif %}
                         </td>
                         <td>
