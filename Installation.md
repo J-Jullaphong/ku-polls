@@ -56,7 +56,7 @@
    ```
    - Windows
    ```  
-   call venv\Scripts\activate
+   .\venv\Scripts\activate
    ```
 
 5. Install Dependencies for required python modules.
