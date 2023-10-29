@@ -1,9 +1,8 @@
 import datetime
 
+from django.contrib import admin
 from django.db import models
 from django.utils import timezone
-from django.contrib import admin
-from django.contrib.auth.models import User
 
 
 class Question(models.Model):
@@ -58,29 +57,3 @@ class Question(models.Model):
         if self.end_date is not None:
             return self.pub_date <= now <= self.end_date
         return self.pub_date <= now
-
-
-class Choice(models.Model):
-    """
-    Choice Model represents a choice in a question with its text
-    and votes count.
-    """
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    choice_text = models.CharField(max_length=200)
-
-    @property
-    def votes(self):
-        """Count the votes for this choice."""
-        return self.vote_set.count()
-
-    def __str__(self):
-        """
-        Returns a string that represents the text of the choice.
-        """
-        return self.choice_text
-
-
-class Vote(models.Model):
-    """Vote model records a Vote of a Choice by a User."""
-    choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
